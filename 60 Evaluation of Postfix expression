@@ -1,0 +1,56 @@
+class Solution {
+  public:
+    // helper to check if token is an operator
+    bool isOperator(const string &s) {
+        return (s == "+" || s == "-" || s == "*" || s == "/" || s == "^");
+    }
+
+    // floor division for integers (handles negatives correctly)
+    long long floorDiv(long long a, long long b) {
+        long long q = a / b;      // C++ truncates toward 0
+        long long r = a % b;
+        if (r != 0 && ((a < 0) ^ (b < 0))) {
+            // if signs differ and not divisible, move quotient one step down
+            q -= 1;
+        }
+        return q;
+    }
+
+    // fast power (a^b) with integers
+    long long power(long long a, long long b) {
+        long long res = 1;
+        while (b > 0) {
+            if (b & 1) res *= a;
+            a *= a;
+            b >>= 1;
+        }
+        return res;
+    }
+
+    int evaluatePostfix(vector<string>& arr) {
+        stack<long long> st;
+
+        for (const string &tok : arr) {
+            if (!isOperator(tok)) {
+                // it's an operand (can be negative)
+                long long val = stoll(tok);
+                st.push(val);
+            } else {
+                // operator: pop two operands
+                long long b = st.top(); st.pop();
+                long long a = st.top(); st.pop();
+                long long res = 0;
+
+                if (tok == "+")      res = a + b;
+                else if (tok == "-") res = a - b;
+                else if (tok == "*") res = a * b;
+                else if (tok == "/") res = floorDiv(a, b);
+                else if (tok == "^") res = power(a, b);
+
+                st.push(res);
+            }
+        }
+
+        return (int)st.top();
+    }
+};

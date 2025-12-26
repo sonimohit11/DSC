@@ -1,0 +1,27 @@
+class Solution {
+  public:
+
+    void removeMid(stack<int>& s, int curr, int mid) {
+        // Base case: reached middle element
+        if (curr == mid) {
+            s.pop();
+            return;
+        }
+
+        int topVal = s.top();
+        s.pop();
+
+        // Recursive call to reach mid
+        removeMid(s, curr + 1, mid);
+
+        // Push elements back except the middle one
+        s.push(topVal);
+    }
+
+    void deleteMid(stack<int>& s) {
+        int n = s.size();
+        int mid = n / 2;   // middle in 0-based index from top
+
+        removeMid(s, 0, mid);
+    }
+};

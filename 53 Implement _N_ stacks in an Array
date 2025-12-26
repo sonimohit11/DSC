@@ -1,0 +1,67 @@
+class kStacks {
+
+    // main array to store elements
+    int *arr;
+    int *top;   // top indices for each stack
+    int *next;  // next array: for free list + stack links
+    int n, k;
+    int freeTop; // beginning index of free list
+
+  public:
+    kStacks(int n, int k) {
+        this->n = n;
+        this->k = k;
+
+        arr = new int[n];
+        top = new int[k];
+        next = new int[n];
+
+        // initialize all stacks as empty
+        for (int i = 0; i < k; i++)
+            top[i] = -1;
+
+        // initialize all spaces as free
+        for (int i = 0; i < n - 1; i++)
+            next[i] = i + 1;
+        next[n - 1] = -1;
+
+        freeTop = 0; // first free index
+    }
+
+    void push(int x, int i) {
+        // i is stack index: assumed 0 <= i < k
+        if (freeTop == -1) {
+            // no space left, ignore as per constraints
+            return;
+        }
+
+        // take index from free list
+        int index = freeTop;
+        freeTop = next[index];
+
+        // insert element into this index
+        arr[index] = x;
+
+        // link this index to the top of stack i
+        next[index] = top[i];
+        top[i] = index;
+    }
+
+    int pop(int i) {
+        // if stack i is empty
+        if (top[i] == -1)
+            return -1;
+
+        // index of top element in stack i
+        int index = top[i];
+
+        // move top to next element in stack
+        top[i] = next[index];
+
+        // add this index back to free list
+        next[index] = freeTop;
+        freeTop = index;
+
+        return arr[index];
+    }
+};

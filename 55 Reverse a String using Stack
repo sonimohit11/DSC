@@ -1,0 +1,20 @@
+class Solution {
+  public:
+    string reverse(const string& S) {
+        stack<char> st;
+        
+        // Push all characters onto stack
+        for (char ch : S) {
+            st.push(ch);
+        }
+        
+        // Pop characters to form the reversed string
+        string ans = "";
+        while (!st.empty()) {
+            ans += st.top();
+            st.pop();
+        }
+        
+        return ans;
+    }
+};

@@ -1,0 +1,38 @@
+class LRUCache {
+    int cap;
+    list<int> dll; // stores keys (LRU at front, MRU at back)
+    unordered_map<int, pair<int, list<int>::iterator>> mp;
+
+  public:
+    LRUCache(int cap) {
+        this->cap = cap;
+    }
+
+    int get(int key) {
+        if(mp.find(key) == mp.end())
+            return -1;
+
+        // move key to most recently used
+        dll.erase(mp[key].second);
+        dll.push_back(key);
+        mp[key].second = --dll.end();
+
+        return mp[key].first;
+    }
+
+    void put(int key, int value) {
+        if(mp.find(key) != mp.end()) {
+            // update existing key
+            dll.erase(mp[key].second);
+        }
+        else if(dll.size() == cap) {
+            // remove least recently used
+            int lru = dll.front();
+            dll.pop_front();
+            mp.erase(lru);
+        }
+
+        dll.push_back(key);
+        mp[key] = {value, --dll.end()};
+    }
+};
