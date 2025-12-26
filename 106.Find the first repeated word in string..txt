@@ -1,0 +1,32 @@
+class Solution {
+  public:
+    string secFrequent(string arr[], int n) {
+        unordered_map<string, int> freq;
+
+        // Count frequency of each string
+        for (int i = 0; i < n; i++) {
+            freq[arr[i]]++;
+        }
+
+        int firstMax = 0, secondMax = 0;
+
+        // Find first and second maximum frequencies
+        for (auto &it : freq) {
+            if (it.second > firstMax) {
+                secondMax = firstMax;
+                firstMax = it.second;
+            } else if (it.second > secondMax && it.second < firstMax) {
+                secondMax = it.second;
+            }
+        }
+
+        // Find the string with second maximum frequency
+        for (auto &it : freq) {
+            if (it.second == secondMax) {
+                return it.first;
+            }
+        }
+
+        return "";
+    }
+};

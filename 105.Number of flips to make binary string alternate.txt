@@ -1,0 +1,19 @@
+class Solution {
+  public:
+    int minFlips(string& s) {
+        int flipsStartWith0 = 0;
+        int flipsStartWith1 = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            // Pattern: 010101...
+            if (s[i] != (i % 2 == 0 ? '0' : '1'))
+                flipsStartWith0++;
+
+            // Pattern: 101010...
+            if (s[i] != (i % 2 == 0 ? '1' : '0'))
+                flipsStartWith1++;
+        }
+
+        return min(flipsStartWith0, flipsStartWith1);
+    }
+};

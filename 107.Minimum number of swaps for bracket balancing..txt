@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    int minimumNumberOfSwaps(string& s) {
+        int balance = 0;     // number of '[' available
+        int imbalance = 0;  // number of extra ']'
+        long long swaps = 0;
+
+        for (char c : s) {
+            if (c == '[') {
+                balance++;
+                if (imbalance > 0) {
+                    swaps += imbalance;
+                    imbalance--;
+                }
+            } else { // ']'
+                if (balance > 0) {
+                    balance--;
+                } else {
+                    imbalance++;
+                }
+            }
+        }
+        return swaps;
+    }
+};
