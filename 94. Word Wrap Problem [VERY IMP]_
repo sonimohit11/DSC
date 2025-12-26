@@ -1,0 +1,23 @@
+class Solution {
+  public:
+    int solveWordWrap(vector<int> arr, int k) {
+        int n = arr.size();
+        vector<int> dp(n + 1, 0);
+        
+        for(int i = n - 1; i >= 0; i--) {
+            int len = 0;
+            dp[i] = INT_MAX;
+            
+            for(int j = i; j < n; j++) {
+                len += arr[j];
+                if(j > i) len++; // space between words
+                
+                if(len > k) break;
+                
+                int cost = (j == n - 1) ? 0 : (k - len) * (k - len);
+                dp[i] = min(dp[i], cost + dp[j + 1]);
+            }
+        }
+        return dp[0];
+    }
+};

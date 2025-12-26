@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Find all subsequences recursively
+void printSubRec(string s, string curr)
+{
+    // Base Case : s is empty, print 
+    // current subsequence
+    if (s.empty()) {
+        cout << curr << endl;
+        return;
+    }
+
+    // curr is passed with including
+    // the first character of the string
+    printSubRec(s.substr(1), curr + s[0]);
+
+    // curr is passed without including
+    // the first character of the string
+    printSubRec(s.substr(1), curr);
+}
+
+// Wrapper method for printSubRec
+void printSubs(string s)
+{
+    string curr = ""; 
+    printSubRec(s, curr);
+}
+
+// Driver code
+int main()
+{
+    string s = "ab";
+    printSubs(s); 
+    return 0;
+}

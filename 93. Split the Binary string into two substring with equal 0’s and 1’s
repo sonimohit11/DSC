@@ -1,0 +1,15 @@
+class Solution {
+  public:
+    int maxSubStr(string str) {
+        int c0 = 0, c1 = 0, ans = 0;
+        
+        for(char c : str) {
+            if(c == '0') c0++;
+            else c1++;
+            
+            if(c0 == c1) ans++;
+        }
+        
+        return (c0 == c1) ? ans : -1;
+    }
+};
