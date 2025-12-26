@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    Node *moveToFront(Node *head) {
+
+        if (head == NULL || head->next == NULL) {
+            return head;
+        }
+
+        Node* prev = NULL;
+        Node* curr = head;
+
+        while (curr->next != NULL) {
+            prev = curr;
+            curr = curr->next;
+        }
+
+        // Detach last node
+        prev->next = NULL;
+
+        curr->next = head;
+        head = curr;
+
+        return head;
+    }
+};
