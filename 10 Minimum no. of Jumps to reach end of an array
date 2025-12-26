@@ -1,0 +1,31 @@
+class Solution {
+  public:
+    int minJumps(vector<int>& arr) {
+        int n = arr.size();
+        if (n <= 1) return 0;
+        if (arr[0] == 0) return -1;
+        
+        int jumps = 0;
+        int currEnd = 0;   // current range end
+        int farthest = 0;  // farthest index we can reach so far
+        
+        for (int i = 0; i < n - 1; i++) {
+            farthest = max(farthest, i + arr[i]);
+            
+            // when we reach the end of current jump range
+            if (i == currEnd) {
+                jumps++;
+                currEnd = farthest;
+                
+                // if we can't move further
+                if (currEnd <= i) return -1;
+                
+                // already can reach or cross last index
+                if (currEnd >= n - 1) break;
+            }
+        }
+        
+        if (currEnd < n - 1) return -1;
+        return jumps;
+    }
+};

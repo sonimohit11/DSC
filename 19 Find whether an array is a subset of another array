@@ -1,0 +1,20 @@
+class Solution {
+  public:
+    bool isSubset(vector<int> &a, vector<int> &b) {
+        
+        unordered_map<int, int> freq;
+        
+        // Count frequencies in array a
+        for (int x : a) {
+            freq[x]++;
+        }
+        
+        // Check each element in b
+        for (int x : b) {
+            if (freq[x] == 0) return false; // not found enough times
+            freq[x]--;
+        }
+        
+        return true;
+    }
+};

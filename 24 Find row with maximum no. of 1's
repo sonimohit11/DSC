@@ -1,0 +1,22 @@
+class Solution {
+  public:
+    int rowWithMax1s(vector<vector<int>> &arr) {
+        int n = arr.size();
+        int m = arr[0].size();
+        
+        int i = 0, j = m - 1;
+        int ans = -1;
+        
+        // Start from top-right corner
+        while (i < n && j >= 0) {
+            if (arr[i][j] == 1) {
+                ans = i;    // this row has more 1s than previous ones
+                j--;        // move left to see if there are more 1s
+            } else {
+                i++;        // move down to next row
+            }
+        }
+        
+        return ans;
+    }
+};

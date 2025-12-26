@@ -1,0 +1,38 @@
+class Solution {
+  public:
+    int median(vector<vector<int>> &mat) {
+        int n = mat.size();
+        int m = mat[0].size();
+        int total = n * m;
+
+        // Find global minimum and maximum from first and last elements of rows
+        int low = mat[0][0];
+        int high = mat[0][m - 1];
+        for (int i = 1; i < n; i++) {
+            low = min(low, mat[i][0]);
+            high = max(high, mat[i][m - 1]);
+        }
+
+        // Binary search on the value range
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            // Count how many elements are <= mid
+            int cnt = 0;
+            for (int i = 0; i < n; i++) {
+                cnt += upper_bound(mat[i].begin(), mat[i].end(), mid) - mat[i].begin();
+            }
+
+            if (cnt <= total / 2) {
+                // We need more (median is larger)
+                low = mid + 1;
+            } else {
+                // Enough elements <= mid, move left
+                high = mid - 1;
+            }
+        }
+
+        // low is the smallest number such that count > total/2 → median
+        return low;
+    }
+};

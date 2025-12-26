@@ -1,0 +1,25 @@
+class Solution {
+  public:
+    bool isPalinArray(vector<int> &arr) {
+        
+        // function to check if a number is palindrome
+        auto isPalin = [](int x) {
+            int original = x;
+            int rev = 0;
+            
+            while (x > 0) {
+                rev = rev * 10 + (x % 10);
+                x /= 10;
+            }
+            
+            return rev == original;
+        };
+        
+        // check every element
+        for (int num : arr) {
+            if (!isPalin(num)) return false;
+        }
+        
+        return true;
+    }
+};
